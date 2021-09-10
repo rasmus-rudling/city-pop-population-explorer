@@ -1,5 +1,5 @@
 # CityPop Population Explorer
-### Linkes
+### Links
   * [Tailwind documentation](https://tailwindcss.com/docs)
 
 
