@@ -13,13 +13,9 @@ const Button1: React.FC<Props> = ({ text, onClick, color, extraClasses }) => {
 			onClick={onClick}
 			className={
 				`
-                text-xl 
-                border 
-                border-${color}-400 
-                text-${color}-400
-                font-light
-                w-56
-                h-10
+                text-xl font-light text-${color}-400
+                border border-${color}-400 
+                w-56 h-10
                 duration-200
                 hover:border-${color}-500 
                 hover:text-${color}-500
