@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
+import { GeoNamesAPI } from "../../utility/geoNamesHandler";
 import Button1 from "../common/Button1";
 import Button2 from "../common/Button2";
 import TextInput from "../common/form/TextInput";
@@ -17,7 +18,9 @@ const SearchByCityPage = () => {
 	// const [errorMsg, setErrorMsg] = useState(errorMsgs.noCityFound);
 	const [errorMsg, setErrorMsg] = useState("");
 
-	const submitSearchHandler = () => {
+	const submitSearchHandler = async () => {
+		let city = await GeoNamesAPI.getCity(currentCityInput);
+		console.log(city);
 		setCurrentCityInput("");
 	};
 
