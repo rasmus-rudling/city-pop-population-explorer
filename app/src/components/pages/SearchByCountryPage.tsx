@@ -25,7 +25,6 @@ const SearchByCountryPage = () => {
 
 	const submitSearchHandler = async () => {
 		let country = await GeoNamesAPI.getCountry(currentCountryInput);
-		console.log(country);
 		setCurrentCountryInput("");
 	};
 
