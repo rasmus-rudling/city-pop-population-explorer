@@ -32,7 +32,7 @@ interface Props {
 	children: React.ReactNode;
 }
 
-const LanguageProvider: React.FC<Props> = ({ children }) => {
+const SelectedCityProvider: React.FC<Props> = ({ children }) => {
 	const [selectedCity, setSelectedCity] = useState<City>({
 		name: "",
 		population: 0,
@@ -60,4 +60,4 @@ const LanguageProvider: React.FC<Props> = ({ children }) => {
 	);
 };
 
-export default LanguageProvider;
+export default SelectedCityProvider;
