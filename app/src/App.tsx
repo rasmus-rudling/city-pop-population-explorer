@@ -6,6 +6,7 @@ import HomePage from "./components/pages/HomePage";
 import SearchByCountryPage from "./components/pages/SearchByCountryPage";
 import PageWrapper from "./components/common/PageWrapper";
 import AllButHomePageWrapper from "./components/common/AllButHomePageWrapper";
+import SearchByCityPage from "./components/pages/SearchByCityPage";
 
 const App = () => {
 	return (
@@ -21,6 +22,14 @@ const App = () => {
 					<PageWrapper>
 						<AllButHomePageWrapper>
 							<SearchByCountryPage />
+						</AllButHomePageWrapper>
+					</PageWrapper>
+				</Route>
+
+				<Route exact path="/search_by_city">
+					<PageWrapper>
+						<AllButHomePageWrapper>
+							<SearchByCityPage />
 						</AllButHomePageWrapper>
 					</PageWrapper>
 				</Route>

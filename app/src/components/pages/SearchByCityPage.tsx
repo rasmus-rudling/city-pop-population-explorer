@@ -4,26 +4,26 @@ import Button1 from "../common/Button1";
 import Button2 from "../common/Button2";
 import TextInput from "../common/form/TextInput";
 
-const SearchByCountryPage = () => {
+const SearchByCityPage = () => {
 	const history = useHistory();
 
 	const errorMsgs = {
-		noCountryFound:
-			"Unfortunately, we can't find the country you're searching for.",
+		noCityFound:
+			"Unfortunately, we can't find the city you're searching for.",
 	};
 
-	const [currentCountryInput, setCurrentCountryInput] = useState<string>("");
+	const [currentCityInput, setCurrentCityInput] = useState<string>("");
 
-	// const [errorMsg, setErrorMsg] = useState(errorMsgs.noCountryFound);
+	// const [errorMsg, setErrorMsg] = useState(errorMsgs.noCityFound);
 	const [errorMsg, setErrorMsg] = useState("");
 
 	const submitSearchHandler = () => {
-		setCurrentCountryInput("");
+		setCurrentCityInput("");
 	};
 
 	return (
 		<>
-			<h3 className="text-xl font-light mt-2 mb-3">SEARCH BY COUNTRY</h3>
+			<h3 className="text-xl font-light mt-2 mb-3">SEARCH BY CITY</h3>
 			<div className="divide-y divide-black">
 				<div className="mb-2">
 					<form
@@ -33,13 +33,13 @@ const SearchByCountryPage = () => {
 						}}
 					>
 						<TextInput
-							currentText={currentCountryInput}
+							currentText={currentCityInput}
 							name="Search-by-country"
-							onTextChange={(newCurrentCountrySearch: string) => {
-								setCurrentCountryInput(newCurrentCountrySearch);
+							onTextChange={(newCurrentCitySearch: string) => {
+								setCurrentCityInput(newCurrentCitySearch);
 							}}
 							color="blue"
-							placeholder="Enter a country"
+							placeholder="Enter a city"
 						/>
 
 						<Button2
@@ -59,8 +59,8 @@ const SearchByCountryPage = () => {
 					<Button1
 						extraClasses="w-full mt-2"
 						color="green"
-						onClick={() => history.push("search_by_city")}
-						text="Search by city"
+						onClick={() => history.push("search_by_country")}
+						text="Search by country"
 					/>
 				</div>
 			</div>
@@ -68,4 +68,4 @@ const SearchByCountryPage = () => {
 	);
 };
 
-export default SearchByCountryPage;
+export default SearchByCityPage;
