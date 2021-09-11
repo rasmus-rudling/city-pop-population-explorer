@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
+import { useSelectedCityUpdate } from "../../contexts/SelectedCityContext";
 import { GeoNamesAPI } from "../../utility/geoNamesHandler";
 import Button1 from "../common/Button1";
 import Button2 from "../common/Button2";
@@ -7,10 +8,11 @@ import TextInput from "../common/form/TextInput";
 
 const SearchByCityPage = () => {
 	const history = useHistory();
+	const selectedCityUpdate = useSelectedCityUpdate();
 
 	const errorMsgs = {
 		noCityFound:
-			"Unfortunately, we can't find the city you're searching for.",
+			"Unfortunately, we can't find the city you were searching for.",
 	};
 
 	const [currentCityInput, setCurrentCityInput] = useState<string>("");
@@ -20,7 +22,14 @@ const SearchByCityPage = () => {
 
 	const submitSearchHandler = async () => {
 		let city = await GeoNamesAPI.getCity(currentCityInput);
-		console.log(city);
+		if (!city) {
+			setErrorMsg(errorMsgs.noCityFound);
+		} else {
+			setErrorMsg("");
+			selectedCityUpdate(city.name, city.population, city.countryName);
+			history.push("/population_result_page");
+		}
+
 		setCurrentCityInput("");
 	};
 

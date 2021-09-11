@@ -3,7 +3,7 @@ const BASE_ENDPOINT_URL =
 
 interface geoNamesResponse {
 	geonames: Array<geoNameObj>;
-	totalResultsCount: Number;
+	totalResultsCount: number;
 }
 
 interface geoNameObj {
@@ -17,11 +17,11 @@ interface geoNameObj {
 	fclName: string;
 	fcode: string;
 	fcodeName: string;
-	geonameId: Number;
+	geonameId: number;
 	lat: string;
 	lng: string;
 	name: string;
-	population: Number;
+	population: number;
 }
 
 export const GeoNamesAPI = {

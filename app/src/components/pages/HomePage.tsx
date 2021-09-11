@@ -4,7 +4,7 @@ import Button1 from "../common/Button1";
 
 const HomePage = () => {
 	const history = useHistory();
-	console.log(history);
+
 	const actionBtns = [
 		{
 			text: "SEARCH BY CITY",
