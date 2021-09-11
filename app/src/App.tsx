@@ -1,12 +1,12 @@
 import React from "react";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useHistory } from "react-router";
 import HomePage from "./components/pages/HomePage";
 import SearchByCountryPage from "./components/pages/SearchByCountryPage";
 import PageWrapper from "./components/common/PageWrapper";
 import AllButHomePageWrapper from "./components/common/AllButHomePageWrapper";
 import SearchByCityPage from "./components/pages/SearchByCityPage";
+import PopulationResultPage from "./components/pages/PopulationResultPage";
 
 const App = () => {
 	return (
@@ -30,6 +30,14 @@ const App = () => {
 					<PageWrapper>
 						<AllButHomePageWrapper>
 							<SearchByCityPage />
+						</AllButHomePageWrapper>
+					</PageWrapper>
+				</Route>
+
+				<Route exact path="/population_result_page">
+					<PageWrapper>
+						<AllButHomePageWrapper>
+							<PopulationResultPage />
 						</AllButHomePageWrapper>
 					</PageWrapper>
 				</Route>
