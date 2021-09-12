@@ -16,18 +16,29 @@ const SearchByCityPage = () => {
 	};
 
 	const [currentCityInput, setCurrentCityInput] = useState<string>("");
+	const [isLoading, setIsLoading] = useState(false);
 
 	// const [errorMsg, setErrorMsg] = useState(errorMsgs.noCityFound);
 	const [errorMsg, setErrorMsg] = useState("");
 
 	const submitSearchHandler = async () => {
-		let city = await GeoNamesAPI.getCity(currentCityInput);
-		if (!city) {
+		setErrorMsg("");
+		setIsLoading(true);
+		let cityResponse = await GeoNamesAPI.getCity(currentCityInput);
+		setIsLoading(false);
+		if (!cityResponse) {
 			setErrorMsg(errorMsgs.noCityFound);
 		} else {
-			setErrorMsg("");
-			selectedCityUpdate(city.name, city.population, city.countryName);
-			history.push("/population_result_page");
+			if (typeof cityResponse === "string") {
+				setErrorMsg(cityResponse);
+			} else {
+				selectedCityUpdate(
+					cityResponse.name,
+					cityResponse.population,
+					cityResponse.countryName
+				);
+				history.push("/population_result_page");
+			}
 		}
 
 		setCurrentCityInput("");
@@ -41,7 +52,9 @@ const SearchByCityPage = () => {
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
-							submitSearchHandler();
+							if (currentCityInput.length !== 0) {
+								submitSearchHandler();
+							}
 						}}
 					>
 						<TextInput
@@ -55,12 +68,14 @@ const SearchByCityPage = () => {
 						/>
 
 						<Button2
-							extraClasses="w-full mt-2"
+							extraClasses="mt-2 mx-auto"
 							color="blue"
-							onClick={() => {}}
+							btnOnClick={() => {}}
 							text="Search"
 							type="submit"
 							icon="search"
+							isLoading={isLoading}
+							disabled={currentCityInput.length === 0}
 						/>
 					</form>
 
