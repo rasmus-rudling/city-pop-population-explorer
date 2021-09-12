@@ -1,13 +1,9 @@
 import React, { useState, useContext } from "react";
 
+import { City } from "../commonTypes";
+
 interface Props {
 	children: React.ReactNode;
-}
-
-interface City {
-	name: string;
-	population: number;
-	country: string;
 }
 
 const SelectedCityContext = React.createContext<City>({

@@ -1,3 +1,6 @@
+import { CLIENT_RENEG_LIMIT } from "tls";
+import { City } from "../commonTypes";
+
 const BASE_ENDPOINT_URL =
 	"http://api.geonames.org/searchJSON?username=weknowit&";
 
@@ -22,6 +25,7 @@ interface geoNameObj {
 	lng: string;
 	name: string;
 	population: number;
+	toponymName: string;
 }
 
 export const GeoNamesAPI = {
@@ -51,20 +55,45 @@ export const GeoNamesAPI = {
 			(geoNameObj) => geoNameObj.countryName === geoNameObj.name
 		)[0];
 
-		if (country && country.population <= 0) {
+		if (!country) {
 			return undefined;
+		} else if (country.population <= 0) {
+			return `We found the city ${country.name} in ${country.countryName}. However, we don't have the info about its population.`;
 		} else {
 			return country;
 		}
 	},
-	async getCity(searchString: string) {
+	async getCitiesFromCountry(countryCode: string) {
 		let response: geoNamesResponse | undefined = await GeoNamesAPI.apiCall(
-			`q=${searchString}&maxRows=10&fuzzy=0.8&orderby=[population]`
+			`maxRows=5&country=${countryCode}&orderby=[population]&featureClass=P`
 		);
 
-		let city = response?.geonames.filter(
-			(geoNameObj) => geoNameObj.fclName === "city, village,..."
-		)[0];
+		let biggestCities = response?.geonames.map((city) => {
+			return {
+				name: city.toponymName,
+				population: city.population,
+				countryName: city.countryName,
+			};
+		});
+
+		if (!biggestCities) {
+			return undefined;
+		} else {
+			return biggestCities;
+		}
+	},
+	async getCity(searchString: string) {
+		let response: geoNamesResponse | undefined = await GeoNamesAPI.apiCall(
+			`q=${searchString}&featureClass=P&maxRows=10&fuzzy=0.8&orderby=[population]`
+		);
+
+		let city = response?.geonames.map((city) => {
+			return {
+				name: city.toponymName,
+				population: city.population,
+				countryName: city.countryName,
+			};
+		})[0];
 
 		if (!city) {
 			return undefined;
