@@ -17,9 +17,8 @@ const Button1: React.FC<Props> = ({ text, onClick, color, extraClasses }) => {
                 border border-${color}-400 
                 w-56 h-10
                 duration-200
-                hover:border-${color}-500 
-                hover:text-${color}-500
-                hover:bg-${color}-50
+                hover:border-${color}-500 hover:text-${color}-500 hover:bg-${color}-50
+                focus:outline-none focus:ring-2 focus:ring-${color}-300 hover:border-${color}-300
             ` + extraClasses
 			}
 		>

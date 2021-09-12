@@ -36,6 +36,7 @@ const Button2: React.FC<Props> = ({
         h-8
         duration-200
         flex justify-center items-center 
+        focus:outline-none focus:ring-2 focus:ring-${color}-300 hover:border-${color}-300
     `;
 
 	buttonClass += extraClasses;

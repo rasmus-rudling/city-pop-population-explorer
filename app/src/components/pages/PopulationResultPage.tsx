@@ -15,7 +15,7 @@ const PopulationResultPage = () => {
 	let cityNameSafe, cityPopulationSafe, cityCountrySafe;
 
 	if (city) {
-		cityNameSafe = city.name.toUpperCase();
+		cityNameSafe = city.name;
 		cityPopulationSafe = numberWithSpaces(String(city.population));
 		cityCountrySafe = city.country === "" ? "" : ", " + city.country;
 	} else {
