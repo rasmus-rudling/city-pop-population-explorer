@@ -43,25 +43,35 @@ export const GeoNamesAPI = {
 			});
 	},
 	async getCountry(searchString: string) {
-		let response: geoNamesResponse = await GeoNamesAPI.apiCall(
+		let response: geoNamesResponse | undefined = await GeoNamesAPI.apiCall(
 			`q=${searchString}&maxRows=10&fuzzy=0.8&orderby=[population]`
 		);
 
-		let country = response.geonames.filter(
+		let country = response?.geonames.filter(
 			(geoNameObj) => geoNameObj.countryName === geoNameObj.name
 		)[0];
 
-		return country;
+		if (country && country.population <= 0) {
+			return undefined;
+		} else {
+			return country;
+		}
 	},
 	async getCity(searchString: string) {
-		let response: geoNamesResponse = await GeoNamesAPI.apiCall(
+		let response: geoNamesResponse | undefined = await GeoNamesAPI.apiCall(
 			`q=${searchString}&maxRows=10&fuzzy=0.8&orderby=[population]`
 		);
 
-		let city = response.geonames.filter(
+		let city = response?.geonames.filter(
 			(geoNameObj) => geoNameObj.fclName === "city, village,..."
 		)[0];
 
-		return city;
+		if (!city) {
+			return undefined;
+		} else if (city.population <= 0) {
+			return `We found the city ${city.name} in ${city.countryName}. However, we don't have the info about its population.`;
+		} else {
+			return city;
+		}
 	},
 };

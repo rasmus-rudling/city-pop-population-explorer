@@ -36,6 +36,7 @@ const TextInput: React.FC<Props> = ({
                 focus:outline-none focus:ring-2 focus:border-${color}-300
             ` + extraClasses
 			}
+			autoFocus
 		/>
 	);
 };

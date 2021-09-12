@@ -1,23 +1,28 @@
 import React, { MouseEventHandler } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import spinner from "../../resources/spinner.svg";
 
 interface Props {
 	text: string;
-	onClick: MouseEventHandler<HTMLButtonElement>;
+	btnOnClick: MouseEventHandler<HTMLButtonElement>;
 	color: string;
 	extraClasses?: string;
 	type?: "button" | "submit" | "reset";
 	icon?: string;
+	isLoading?: boolean;
+	disabled?: boolean;
 }
 
 const Button2: React.FC<Props> = ({
 	text,
-	onClick,
+	btnOnClick,
 	color,
 	extraClasses,
 	icon,
 	type = "button",
+	isLoading = true,
+	disabled = false,
 }) => {
 	let iconToDisplay;
 
@@ -25,28 +30,39 @@ const Button2: React.FC<Props> = ({
 		iconToDisplay = <FontAwesomeIcon icon={faSearch} />;
 	}
 
-	return (
-		<button
-			onClick={onClick}
-			className={
-				`
-                text-l font-medium text-white
-                border border-${color}-400 
-                w-max
-                px-3
-                py-1
-                duration-200
-                bg-${color}-500
-                hover:bg-${color}-600
-            ` + extraClasses
-			}
-			type={type}
-		>
-			{text}
+	let buttonClass = `
+        text-l font-medium text-white
+        w-24
+        h-8
+        duration-200
+        flex justify-center items-center 
+    `;
 
-			{iconToDisplay ? (
-				<span className={`ml-1`}>{iconToDisplay}</span>
-			) : null}
+	buttonClass += extraClasses;
+
+	if (disabled) {
+		buttonClass += ` bg-${color}-100 cursor-default`;
+	} else {
+		buttonClass += ` bg-${color}-500 border hover:bg-${color}-600`;
+	}
+
+	return (
+		<button onClick={btnOnClick} className={buttonClass} type={type}>
+			{isLoading ? (
+				<img
+					src={spinner}
+					alt="spinner"
+					className={`fill-current text-white h-6`}
+				/>
+			) : (
+				<>
+					{" "}
+					{text}
+					{iconToDisplay ? (
+						<span className={`ml-1`}>{iconToDisplay}</span>
+					) : null}
+				</>
+			)}
 		</button>
 	);
 };

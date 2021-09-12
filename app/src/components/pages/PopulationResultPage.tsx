@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useSelectedCity } from "../../contexts/SelectedCityContext";
 import Button1 from "../common/Button1";
@@ -23,6 +23,13 @@ const PopulationResultPage = () => {
 		cityPopulationSafe = numberWithSpaces("");
 		cityCountrySafe = "";
 	}
+
+	useEffect(() => {
+		// If population is zero, the user has been wrongly redirected to this page.
+		if (city.population === 0) {
+			history.push("/");
+		}
+	}, []);
 
 	return (
 		<>
