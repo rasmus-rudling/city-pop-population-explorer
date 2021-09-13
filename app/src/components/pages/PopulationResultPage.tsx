@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useSelectedCity } from "../../contexts/SelectedCityContext";
+import { useSelectedCountryUpdate } from "../../contexts/SelectedCountryContext";
+import { GeoNamesAPI } from "../../utility/geoNamesHandler";
 import Button1 from "../common/Button1";
+import Button2 from "../common/Button2";
 import InfoDisplayer from "../common/InfoDisplayer";
 
 const PopulationResultPage = () => {
 	const city = useSelectedCity();
-
+	const selectedCountryUpdate = useSelectedCountryUpdate();
 	const history = useHistory();
 
 	const numberWithSpaces = (x: string) =>
@@ -23,6 +26,23 @@ const PopulationResultPage = () => {
 		cityPopulationSafe = numberWithSpaces("");
 		cityCountrySafe = "";
 	}
+
+	const [isLoading, setIsLoading] = useState(false);
+
+	const seeBiggestCitiesHandler = async () => {
+		setIsLoading(true);
+		let countryResponse = await GeoNamesAPI.getCountry(city.country);
+
+		if (countryResponse && typeof countryResponse !== "string") {
+			await selectedCountryUpdate(
+				countryResponse.name,
+				countryResponse.countryCode
+			);
+			history.push("/country_result_page");
+		}
+
+		setIsLoading(false);
+	};
 
 	useEffect(() => {
 		// If population is zero, the user has been wrongly redirected to this page.
@@ -41,6 +61,14 @@ const PopulationResultPage = () => {
 					<InfoDisplayer
 						typeOfInfo="Population"
 						info={cityPopulationSafe}
+					/>
+
+					<Button2
+						extraClasses="w-full mt-2"
+						color="blue"
+						btnOnClick={seeBiggestCitiesHandler}
+						isLoading={isLoading}
+						text={`Biggest cities in ${city.country}`}
 					/>
 				</div>
 
