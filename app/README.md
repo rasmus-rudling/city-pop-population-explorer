@@ -1,9 +1,3 @@
-# CityPop Population Explorer
-### Links
-  * [Tailwind documentation](https://tailwindcss.com/docs)
-
-
----
 
 # Getting Started with Create React App
 
