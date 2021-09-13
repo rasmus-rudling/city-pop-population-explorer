@@ -21,7 +21,7 @@ const HomePage = () => {
 	return (
 		<>
 			<p className="mt-1 text-center w-11/12 italic font-light">
-				Discover the population in the city of your choice!
+				Discover the population in a city of your choice!
 			</p>
 
 			<div
