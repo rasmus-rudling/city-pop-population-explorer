@@ -4,5 +4,6 @@ This project was built using [Tailwind](https://tailwindcss.com/docs), [React](h
 ### Seting up the development environment
 1. Clone the repository: `git clone git@github.com:rrudling/city-pop-population-explorer.git`
 3. Enter the `/app` directory inside the repository: `cd city-pop-population-explorer/app`
-4. Install all npm dependencies: `npm install`
-5. Start local development server: `npm start`
+4. Make sure you have [node](https://nodejs.org/) installed (should return `v14.17.3` or similar): `node -v`
+5. Install all npm dependencies: `npm install`
+6. Start local development server: `npm start`
