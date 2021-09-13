@@ -26,7 +26,6 @@ const SearchByCountryPage = () => {
 		setErrorMsg("");
 		setIsLoading(true);
 		let countryResponse = await GeoNamesAPI.getCountry(currentCountryInput);
-		setIsLoading(false);
 
 		if (!countryResponse) {
 			setErrorMsg(errorMsgs.noCountryFound);
@@ -34,14 +33,14 @@ const SearchByCountryPage = () => {
 			if (typeof countryResponse === "string") {
 				setErrorMsg(countryResponse);
 			} else {
-				selectedCountryUpdate(
+				await selectedCountryUpdate(
 					countryResponse.name,
 					countryResponse.countryCode
 				);
 				history.push("/country_result_page");
 			}
 		}
-
+		setIsLoading(false);
 		setCurrentCountryInput("");
 	};
 
@@ -53,7 +52,10 @@ const SearchByCountryPage = () => {
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
-							if (currentCountryInput.length !== 0) {
+							if (
+								currentCountryInput.length !== 0 &&
+								!isLoading
+							) {
 								submitSearchHandler();
 							}
 						}}

@@ -22,10 +22,12 @@ const SearchByCityPage = () => {
 	const [errorMsg, setErrorMsg] = useState("");
 
 	const submitSearchHandler = async () => {
+		selectedCityUpdate("", "", []);
+
 		setErrorMsg("");
 		setIsLoading(true);
 		let cityResponse = await GeoNamesAPI.getCity(currentCityInput);
-		setIsLoading(false);
+
 		if (!cityResponse) {
 			setErrorMsg(errorMsgs.noCityFound);
 		} else {
@@ -40,7 +42,7 @@ const SearchByCityPage = () => {
 				history.push("/population_result_page");
 			}
 		}
-
+		setIsLoading(false);
 		setCurrentCityInput("");
 	};
 
@@ -52,7 +54,7 @@ const SearchByCityPage = () => {
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
-							if (currentCityInput.length !== 0) {
+							if (currentCityInput.length !== 0 && !isLoading) {
 								submitSearchHandler();
 							}
 						}}
