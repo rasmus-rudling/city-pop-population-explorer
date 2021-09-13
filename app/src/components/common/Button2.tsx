@@ -21,7 +21,7 @@ const Button2: React.FC<Props> = ({
 	extraClasses,
 	icon,
 	type = "button",
-	isLoading = true,
+	isLoading = false,
 	disabled = false,
 }) => {
 	let iconToDisplay;
@@ -33,7 +33,7 @@ const Button2: React.FC<Props> = ({
 	let buttonClass = `
         text-l font-medium text-white
         w-24
-        h-8
+        p-1
         duration-200
         flex justify-center items-center 
         focus:outline-none focus:ring-2 focus:ring-${color}-300 hover:border-${color}-300

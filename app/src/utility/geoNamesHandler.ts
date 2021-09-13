@@ -79,6 +79,15 @@ export const GeoNamesAPI = {
 		if (!biggestCities) {
 			return undefined;
 		} else {
+			biggestCities.sort((firstCity, secondCity) => {
+				if (firstCity.population > secondCity.population) {
+					return -1;
+				} else if (firstCity.population < secondCity.population) {
+					return 1;
+				} else {
+					return 0;
+				}
+			});
 			return biggestCities;
 		}
 	},
