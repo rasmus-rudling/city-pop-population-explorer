@@ -1,8 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router";
 
-// interface Props {}
-
 const PageWrapper: React.FC = ({ children }) => {
 	const history = useHistory();
 

@@ -1,6 +1,3 @@
-import { CLIENT_RENEG_LIMIT } from "tls";
-import { City } from "../commonTypes";
-
 const BASE_ENDPOINT_URL =
 	"http://api.geonames.org/searchJSON?username=weknowit&";
 
