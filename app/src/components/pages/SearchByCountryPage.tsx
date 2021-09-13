@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import { useSelectedCityUpdate } from "../../contexts/SelectedCityContext";
+import {
+	useSearchInput,
+	useSearchInputUpdate,
+} from "../../contexts/SearchInputContext";
 import { useSelectedCountryUpdate } from "../../contexts/SelectedCountryContext";
 import { GeoNamesAPI } from "../../utility/geoNamesHandler";
 import Button1 from "../common/Button1";
@@ -10,22 +13,39 @@ import TextInput from "../common/form/TextInput";
 const SearchByCountryPage = () => {
 	const history = useHistory();
 	const selectedCountryUpdate = useSelectedCountryUpdate();
+	const searchInput = useSearchInput();
+	const searchInputUpdate = useSearchInputUpdate();
 
 	const errorMsgs = {
 		noCountryFound:
 			"Unfortunately, we can't find the country you're searching for.",
 	};
 
+	const infoMsgs = {
+		longRequest:
+			"The request is taking longer than expected. Try refreshing your browser.",
+	};
+
 	const [isLoading, setIsLoading] = useState(false);
 
-	const [currentCountryInput, setCurrentCountryInput] = useState<string>("");
-
 	const [errorMsg, setErrorMsg] = useState("");
+	const [infoMsg, setInfoMsg] = useState("");
+	const [showInfo, setShowInfo] = useState(true);
 
 	const submitSearchHandler = async () => {
+		setShowInfo(true);
 		setErrorMsg("");
 		setIsLoading(true);
-		let countryResponse = await GeoNamesAPI.getCountry(currentCountryInput);
+
+		setInfoMsg("");
+
+		setTimeout(() => {
+			setInfoMsg(infoMsgs.longRequest);
+		}, 7500);
+
+		let countryResponse = await GeoNamesAPI.getCountry(searchInput);
+
+		setShowInfo(false);
 
 		if (!countryResponse) {
 			setErrorMsg(errorMsgs.noCountryFound);
@@ -41,7 +61,7 @@ const SearchByCountryPage = () => {
 			}
 		}
 		setIsLoading(false);
-		setCurrentCountryInput("");
+		searchInputUpdate("");
 	};
 
 	return (
@@ -52,19 +72,16 @@ const SearchByCountryPage = () => {
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
-							if (
-								currentCountryInput.length !== 0 &&
-								!isLoading
-							) {
+							if (searchInput.length !== 0 && !isLoading) {
 								submitSearchHandler();
 							}
 						}}
 					>
 						<TextInput
-							currentText={currentCountryInput}
+							currentText={searchInput}
 							name="Search-by-country"
 							onTextChange={(newCurrentCountrySearch: string) => {
-								setCurrentCountryInput(newCurrentCountrySearch);
+								searchInputUpdate(newCurrentCountrySearch);
 							}}
 							color="blue"
 							placeholder="Enter a country"
@@ -78,11 +95,15 @@ const SearchByCountryPage = () => {
 							type="submit"
 							icon="search"
 							isLoading={isLoading}
-							disabled={currentCountryInput.length === 0}
+							disabled={searchInput.length === 0}
 						/>
 					</form>
 
 					<p className={`text-red-500 mt-2`}>{errorMsg}</p>
+
+					{showInfo ? (
+						<p className={`text-yellow-600 mt-2`}>{infoMsg}</p>
+					) : null}
 				</div>
 
 				<div>

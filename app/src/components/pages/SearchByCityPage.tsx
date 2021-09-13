@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
+import {
+	useSearchInput,
+	useSearchInputUpdate,
+} from "../../contexts/SearchInputContext";
 import { useSelectedCityUpdate } from "../../contexts/SelectedCityContext";
 import { GeoNamesAPI } from "../../utility/geoNamesHandler";
 import Button1 from "../common/Button1";
@@ -9,24 +13,39 @@ import TextInput from "../common/form/TextInput";
 const SearchByCityPage = () => {
 	const history = useHistory();
 	const selectedCityUpdate = useSelectedCityUpdate();
+	const searchInput = useSearchInput();
+	const searchInputUpdate = useSearchInputUpdate();
 
 	const errorMsgs = {
 		noCityFound:
 			"Unfortunately, we can't find the city you were searching for.",
 	};
 
-	const [currentCityInput, setCurrentCityInput] = useState<string>("");
+	const infoMsgs = {
+		longRequest:
+			"The request is taking longer than expected. Try refreshing your browser.",
+	};
+
 	const [isLoading, setIsLoading] = useState(false);
 
-	// const [errorMsg, setErrorMsg] = useState(errorMsgs.noCityFound);
 	const [errorMsg, setErrorMsg] = useState("");
+	const [infoMsg, setInfoMsg] = useState("");
+	const [showInfo, setShowInfo] = useState(true);
 
 	const submitSearchHandler = async () => {
-		selectedCityUpdate("", "", []);
+		setShowInfo(true);
 
 		setErrorMsg("");
+		setInfoMsg("");
 		setIsLoading(true);
-		let cityResponse = await GeoNamesAPI.getCity(currentCityInput);
+
+		setTimeout(() => {
+			setInfoMsg(infoMsgs.longRequest);
+		}, 7500);
+
+		let cityResponse = await GeoNamesAPI.getCity(searchInput);
+
+		setShowInfo(false);
 
 		if (!cityResponse) {
 			setErrorMsg(errorMsgs.noCityFound);
@@ -43,7 +62,7 @@ const SearchByCityPage = () => {
 			}
 		}
 		setIsLoading(false);
-		setCurrentCityInput("");
+		searchInputUpdate("");
 	};
 
 	return (
@@ -54,16 +73,16 @@ const SearchByCityPage = () => {
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
-							if (currentCityInput.length !== 0 && !isLoading) {
+							if (searchInput.length !== 0 && !isLoading) {
 								submitSearchHandler();
 							}
 						}}
 					>
 						<TextInput
-							currentText={currentCityInput}
+							currentText={searchInput}
 							name="Search-by-country"
 							onTextChange={(newCurrentCitySearch: string) => {
-								setCurrentCityInput(newCurrentCitySearch);
+								searchInputUpdate(newCurrentCitySearch);
 							}}
 							color="blue"
 							placeholder="Enter a city"
@@ -77,11 +96,15 @@ const SearchByCityPage = () => {
 							type="submit"
 							icon="search"
 							isLoading={isLoading}
-							disabled={currentCityInput.length === 0}
+							disabled={searchInput.length === 0}
 						/>
 					</form>
 
 					<p className={`text-red-500 mt-2`}>{errorMsg}</p>
+
+					{showInfo ? (
+						<p className={`text-yellow-600 mt-2`}>{infoMsg}</p>
+					) : null}
 				</div>
 
 				<div>

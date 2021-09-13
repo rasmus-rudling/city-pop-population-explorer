@@ -10,54 +10,57 @@ import PopulationResultPage from "./components/pages/PopulationResultPage";
 import SelectedCityProvider from "./contexts/SelectedCityContext";
 import CountryResultPage from "./components/pages/CountryResultPage";
 import SelectedCountryProvider from "./contexts/SelectedCountryContext";
+import SearchInputProvider from "./contexts/SearchInputContext";
 
 const App = () => {
 	return (
-		<SelectedCountryProvider>
-			<SelectedCityProvider>
-				<Router>
-					<Switch>
-						<Route exact path="/">
-							<PageWrapper>
-								<HomePage />
-							</PageWrapper>
-						</Route>
+		<SearchInputProvider>
+			<SelectedCountryProvider>
+				<SelectedCityProvider>
+					<Router>
+						<Switch>
+							<Route exact path="/">
+								<PageWrapper>
+									<HomePage />
+								</PageWrapper>
+							</Route>
 
-						<Route exact path="/search_by_country">
-							<PageWrapper>
-								<AllButHomePageWrapper>
-									<SearchByCountryPage />
-								</AllButHomePageWrapper>
-							</PageWrapper>
-						</Route>
+							<Route exact path="/search_by_country">
+								<PageWrapper>
+									<AllButHomePageWrapper>
+										<SearchByCountryPage />
+									</AllButHomePageWrapper>
+								</PageWrapper>
+							</Route>
 
-						<Route exact path="/search_by_city">
-							<PageWrapper>
-								<AllButHomePageWrapper>
-									<SearchByCityPage />
-								</AllButHomePageWrapper>
-							</PageWrapper>
-						</Route>
+							<Route exact path="/search_by_city">
+								<PageWrapper>
+									<AllButHomePageWrapper>
+										<SearchByCityPage />
+									</AllButHomePageWrapper>
+								</PageWrapper>
+							</Route>
 
-						<Route exact path="/population_result_page">
-							<PageWrapper>
-								<AllButHomePageWrapper>
-									<PopulationResultPage />
-								</AllButHomePageWrapper>
-							</PageWrapper>
-						</Route>
+							<Route exact path="/population_result_page">
+								<PageWrapper>
+									<AllButHomePageWrapper>
+										<PopulationResultPage />
+									</AllButHomePageWrapper>
+								</PageWrapper>
+							</Route>
 
-						<Route exact path="/country_result_page">
-							<PageWrapper>
-								<AllButHomePageWrapper>
-									<CountryResultPage />
-								</AllButHomePageWrapper>
-							</PageWrapper>
-						</Route>
-					</Switch>
-				</Router>
-			</SelectedCityProvider>
-		</SelectedCountryProvider>
+							<Route exact path="/country_result_page">
+								<PageWrapper>
+									<AllButHomePageWrapper>
+										<CountryResultPage />
+									</AllButHomePageWrapper>
+								</PageWrapper>
+							</Route>
+						</Switch>
+					</Router>
+				</SelectedCityProvider>
+			</SelectedCountryProvider>
+		</SearchInputProvider>
 	);
 };
 
