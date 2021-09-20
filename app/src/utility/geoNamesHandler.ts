@@ -1,5 +1,5 @@
 const BASE_ENDPOINT_URL =
-	"http://api.geonames.org/searchJSON?username=weknowit&";
+	"https://secure.geonames.org/searchJSON?username=weknowit&";
 
 interface geoNamesResponse {
 	geonames: Array<geoNameObj>;
@@ -40,6 +40,7 @@ export const GeoNamesAPI = {
 				}
 			})
 			.catch((error) => {
+                console.log("Hej")
 				console.log(error);
 			});
 	},
