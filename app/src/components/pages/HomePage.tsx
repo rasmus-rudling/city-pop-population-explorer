@@ -33,6 +33,7 @@ const HomePage = () => {
 			>
 				{actionBtns.map((actionBtn) => (
 					<Button1
+						key={actionBtn.text}
 						text={actionBtn.text}
 						onClick={actionBtn.onClick}
 						color={actionBtn.color}
