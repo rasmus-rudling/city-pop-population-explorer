@@ -40,7 +40,6 @@ export const GeoNamesAPI = {
 				}
 			})
 			.catch((error) => {
-                console.log("Hej")
 				console.log(error);
 			});
 	},
